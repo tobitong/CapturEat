@@ -16,13 +16,14 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="25dp"
+            android:src="@drawable/bakso"/>
 
         <TextView
             android:id="@+id/recipe_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nama"
+            android:text="Bakso"
             android:textStyle="bold"
             android:textSize="50sp"
             android:layout_centerHorizontal="true"
@@ -35,9 +36,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30sp"
+            android:text="test, test, test, test, test, test"
             android:layout_below="@+id/recipe_name"
             android:layout_marginTop="10dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"/>
 
     </RelativeLayout>
 
