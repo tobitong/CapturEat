@@ -39,13 +39,45 @@
         android:textSize="25sp" />
 
     <Button
-        android:id="@+id/btn_try"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_open_cam"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_desc"
-        android:layout_marginTop="128dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="147dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="147dp"
         android:backgroundTint="@color/color_primary_dark"
         android:text="Try It!!"
+        android:textColor="@color/color_accent"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_desc2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_open_cam"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="7dp"
+        android:text="Or Upload your Photo"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/btn_open_gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_desc2"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="146dp"
+        android:backgroundTint="@color/color_primary_dark"
+        android:text="Upload"
         android:textColor="@color/color_accent"
         android:textSize="20sp" />
 
