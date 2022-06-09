@@ -74,4 +74,12 @@
         android:textColor="@color/color_accent"
         android:textSize="20sp" />
 
+    <ImageView
+        android:id="@+id/iv_gal"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_open_gallery"
+        android:layout_marginTop="10dp"/>
+
 </RelativeLayout>
