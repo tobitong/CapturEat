@@ -12,6 +12,6 @@
         android:id="@+id/lv_recipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/recipe_item"/>
+        tools:listitem="@layout/recipe_item" />
 
 </RelativeLayout>

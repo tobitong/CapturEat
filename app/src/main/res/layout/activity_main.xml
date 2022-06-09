@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="154dp"
+        android:layout_marginTop="100dp"
         android:text="CapturEat"
         android:textColor="@color/color_primary_dark"
         android:textSize="35sp"
@@ -73,13 +73,5 @@
         android:text="Upload"
         android:textColor="@color/color_accent"
         android:textSize="20sp" />
-
-    <ImageView
-        android:id="@+id/food_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@id/btn_open_gallery"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
