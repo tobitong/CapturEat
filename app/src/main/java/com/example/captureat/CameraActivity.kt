@@ -2,6 +2,7 @@ package com.example.captureat
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -59,7 +60,9 @@ class CameraActivity : AppCompatActivity() {
             )
         }
 
-        binding.btnCaptureImage.setOnClickListener { takePicture() }
+        binding.btnCaptureImage.setOnClickListener {
+            takePicture()
+        }
 
         cameraExcecutor = Executors.newSingleThreadExecutor()
     }
@@ -111,11 +114,14 @@ class CameraActivity : AppCompatActivity() {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
 
-                override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults){
+                override fun onImageSaved(output: ImageCapture.OutputFileResults){
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
+
+//                    val intent_next = Intent(parent, ListRecipeActivity::class.java)
+//                    intent_next.putExtra("Image File", )
+//                    startActivity(intent_next)
                 }
             }
         )
