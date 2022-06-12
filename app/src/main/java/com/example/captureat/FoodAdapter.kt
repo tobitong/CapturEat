@@ -1,27 +1,38 @@
 package com.example.captureat
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import de.hdodenhof.circleimageview.CircleImageView
 
-class FoodAdapter(private val context: Activity, private val foodList: List<Food>): ArrayAdapter<Food>(context, R.layout.recipe_item, foodList) {
+class FoodAdapter(
+    val foodList: ArrayList<FoodModel.Food>
+): RecyclerView.Adapter<FoodAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+        LayoutInflater.from(parent.context)
+            .inflate(R.layout.recipe_item, parent, false)
+    )
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val inflater: LayoutInflater = LayoutInflater.from(context)
-        val view: View = inflater.inflate(R.layout.recipe_item, null)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val food = foodList[position]
+//        holder.foodImage.setImageResource(food.image_link)
+        holder.foodName.text = food.title
+        holder.ingredients.text = food.instructions
+    }
 
-        val foodPict: ImageView = view.findViewById(R.id.food_pict)
-        val foodName: TextView = view.findViewById(R.id.food_name)
-        val ingredients: TextView = view.findViewById(R.id.food_ingredients)
+    override fun getItemCount() = foodList.size
 
-//        foodPict.setImageResource(foodList[position].image_link)
-        foodName.text = foodList[position].title
-        ingredients.text = foodList[position].cleaned_ingredients
+    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+        val foodImage = view.findViewById<CircleImageView>(R.id.food_pict)
+        val foodName = view.findViewById<TextView>(R.id.food_name)
+        val ingredients = view.findViewById<TextView>(R.id.food_ingredients)
+    }
 
-        return view
+    public fun setData(data: List<FoodModel.Food>) {
+        foodList.clear()
+        foodList.addAll(data)
+        notifyDataSetChanged()
     }
 }

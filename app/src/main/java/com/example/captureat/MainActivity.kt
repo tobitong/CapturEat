@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,8 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private var foodImage: Uri? = null
     private val REQUEST_CODE_GALLERY = 1
+    private val REQUEST_CODE_CAMERA = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,18 +36,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_GALLERY) {
-            foodImage = data?.data
-            val temp = uriToFile(foodImage!!, this)
-            val intent_next = Intent(this, ListRecipeActivity::class.java)
-            intent_next.putExtra("Food Image", temp.path)
-            startActivity(intent_next)
+        if(resultCode == Activity.RESULT_OK) {
+            if(requestCode == REQUEST_CODE_GALLERY) {
+                val temp = uriToFile(data?.data!!, this)
+                openListRecipe(temp.path)
+            }else if(requestCode==REQUEST_CODE_CAMERA) {
+                val path = data?.getStringExtra("Image File").orEmpty()
+                openListRecipe(path)
+            }
         }
+
     }
 
     private fun openCam() {
         val intent_cam = Intent(this, CameraActivity::class.java)
-        startActivity(intent_cam)
+        startActivityForResult(intent_cam, REQUEST_CODE_CAMERA)
     }
 
     private fun openGal() {
@@ -71,7 +73,9 @@ class MainActivity : AppCompatActivity() {
         return file
     }
 
-//    private fun createTempFile(prefix: Context): File {
-//
-//    }
+    private fun openListRecipe(path: String) {
+        val intent_next = Intent(this, ListRecipeActivity::class.java)
+        intent_next.putExtra("Food Image", path)
+        startActivity(intent_next)
+    }
 }

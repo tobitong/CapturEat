@@ -8,10 +8,12 @@
     tools:context=".ListRecipeActivity"
     android:background="@color/color_accent">
 
-    <ListView
-        android:id="@+id/lv_recipe"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_recipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/recipe_item" />
+        tools:listitem="@layout/recipe_item"
+        tools:itemCount="3"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </RelativeLayout>

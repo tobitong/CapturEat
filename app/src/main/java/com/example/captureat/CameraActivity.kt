@@ -1,6 +1,8 @@
 package com.example.captureat
 
 import android.Manifest
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,6 +20,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.captureat.databinding.ActivityCameraBinding
+import java.io.File
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -115,13 +118,16 @@ class CameraActivity : AppCompatActivity() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults){
+                    val imageUri = output.savedUri
+                    val filePath = imageUri?.path
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
 
-//                    val intent_next = Intent(parent, ListRecipeActivity::class.java)
-//                    intent_next.putExtra("Image File", )
-//                    startActivity(intent_next)
+                    setResult(Activity.RESULT_OK, Intent().apply{
+                        putExtra("Image File", filePath)
+                    })
+                    finish()
                 }
             }
         )
