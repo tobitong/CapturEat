@@ -4,20 +4,17 @@ import android.content.Intent
 import okhttp3.RequestBody
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.captureat.databinding.ActivityListRecipeBinding
 import com.example.captureat.retrofit.ApiService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import java.io.File
-import kotlin.coroutines.CoroutineContext
 
 class ListRecipeActivity : AppCompatActivity() {
 
@@ -30,40 +27,52 @@ class ListRecipeActivity : AppCompatActivity() {
     private lateinit var fileUpload: File
     private lateinit var imagePath: String
 
+    private val liveData = MutableLiveData<List<FoodModel.Food>>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListRecipeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //setting the adapter
+        foodList = binding.rvRecipe
+        setupList()
+
+        liveData.observe(this) {
+            foodAdapter.setData(it)
+        }
+
+        //get image path from the gallery or camera
         val intent = getIntent()
         imagePath = intent.getStringExtra("Food Image").orEmpty()
 
-
-    }
-
-    override fun onStart() {
-        super.onStart()
+        //uploading image
         lifecycleScope.launch {
-            upload(imagePath)
+            upload(imagePath).collect {
+                liveData.postValue(it)
+            }
         }
     }
 
     private fun setupList() {
-        foodList = binding.rvRecipe
-        foodAdapter = FoodAdapter(arrayListOf())
+        foodAdapter = FoodAdapter( object : FoodAdapter.OnAdapterListener {
+            override fun onClick(recipe: FoodModel.Food) {
+                startActivity(
+                    Intent(this@ListRecipeActivity, RecipeActivity::class.java)
+                        .putExtra("recipe", recipe)
+                )
+            }
+        })
         foodList.adapter = foodAdapter
     }
 
-    suspend fun upload(imagePath: String?) {
-        CoroutineScope(Dispatchers.IO).launch {
-            fileUpload = File(imagePath)
-            val response = api.uploadImage(
-                MultipartBody.Part.createFormData("image", fileUpload.name, RequestBody.create("image/jpeg".toMediaTypeOrNull(), fileUpload))
-            )
-            val listRecipes = response.body()!!.recipe
-            val result = "Menampilkan resep ${listRecipes[0].title}"
-            Log.d("TestActivity", result)
-        }
-
-    }
+    //method for uploading image to api
+    suspend fun upload(imagePath: String?) = flow<List<FoodModel.Food>> {
+        fileUpload = File(imagePath)
+        val response = api.uploadImage(
+            MultipartBody.Part.createFormData("image", fileUpload.name, RequestBody.create("image/jpeg".toMediaTypeOrNull(), fileUpload))
+        )
+        val list = response.body()!!.recipe
+        emit(list)
+    }.flowOn(Dispatchers.IO)
 }

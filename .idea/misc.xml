@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tobyf/AndroidStudioProjects/CapturEat/app/src/main/res/drawable/camera_art.xml" value="0.166" />
+        <entry key="..\:/Users/tobyf/AndroidStudioProjects/CapturEat/app/src/main/res/drawable/gallery_art.xml" value="0.166" />
         <entry key="..\:/Users/tobyf/AndroidStudioProjects/CapturEat/app/src/main/res/layout/activity_camera.xml" value="0.25" />
         <entry key="..\:/Users/tobyf/AndroidStudioProjects/CapturEat/app/src/main/res/layout/activity_list_recipe.xml" value="0.264" />
         <entry key="..\:/Users/tobyf/AndroidStudioProjects/CapturEat/app/src/main/res/layout/activity_main.xml" value="0.17708333333333334" />

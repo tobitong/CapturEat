@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //setting button to open camera and gallery
         binding.btnOpenCam.setOnClickListener { openCam() }
         binding.btnOpenGallery.setOnClickListener {
             openGal()
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        //checking if the result is not null
         if(resultCode == Activity.RESULT_OK) {
             if(requestCode == REQUEST_CODE_GALLERY) {
                 val temp = uriToFile(data?.data!!, this)

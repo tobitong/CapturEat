@@ -1,6 +1,6 @@
 package com.example.captureat
 
-import android.graphics.Picture
+import java.io.Serializable
 
 data class FoodModel(
     val recipe: List<Food>
@@ -12,5 +12,5 @@ data class FoodModel(
         val image_name: String,
         val instructions: String,
         val title: String
-    )
+    ) : Serializable
 }
